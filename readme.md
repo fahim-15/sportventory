@@ -27,6 +27,7 @@
 5. Run migrations:
    ```
    python manage.py migrate
+   python manage.py makemigrations
    ```
 
 6. Start the development server:

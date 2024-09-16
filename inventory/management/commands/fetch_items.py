@@ -5,18 +5,21 @@ from django.core.management.base import BaseCommand
 from datetime import datetime
 from django.conf import settings
 import time
-
+import sys
 
 class Command(BaseCommand):
     help = 'Fetch items with quantity 0 and save to a JSON file'
 
     def handle(self, *args, **kwargs):
+        if 'runserver' not in sys.argv:
+            self.stdout.write(self.style.ERROR('This command only runs with runserver.'))
+            return
+
         data_dir = os.path.join(settings.BASE_DIR, 'data')
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
 
         while True:
-            print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             url = 'http://127.0.0.1:8000/api/inventory/v1/items/?quantity=0'
 
             try:
